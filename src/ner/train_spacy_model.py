@@ -8,10 +8,10 @@ from sklearn.model_selection import train_test_split
 from spacy.scorer import Scorer
 from spacy.training import Example
 
-from auto_label_contracts import TRAIN_DATA
+from src.ner.auto_label_contracts import TRAIN_DATA
 
 def save_dataset(train_data, test_data):
-    BASE_DIR = Path(__file__).resolve().parents[1]
+    BASE_DIR = Path(__file__).resolve().parents[2]
     dataset_dir = BASE_DIR / "data" / "datasets"
     dataset_dir.mkdir(parents=True, exist_ok=True)
 
@@ -81,6 +81,10 @@ if __name__ == "__main__":
 
     evaluate_model(model, test_data)
 
-    model.to_disk("trained_ner_model")
+    BASE_DIR = Path(__file__).resolve().parents[2]
+    model_dir = BASE_DIR / "data" / "models" / "trained_ner_model"
+    model_dir.parent.mkdir(parents=True, exist_ok=True)
+
+    model.to_disk(model_dir)
 
     print("✅ Model trained and saved.")
